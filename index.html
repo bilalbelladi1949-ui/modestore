@@ -52,8 +52,8 @@
 <div id="cartDrawer" class="cart-drawer hidden" onclick="if(event.target===this)closeCart()"><div class="cart-panel"><div class="cart-head"><h2 data-i18n="yourCart">Ton panier</h2><button class="navbtn" onclick="closeCart()">✕</button></div><div id="cartItems"></div><div class="cart-total"><span data-i18n="total">Total estimé</span><span id="cartTotal">0 DH</span></div><p class="note" data-i18n="cartNote">La commande sera envoyée sur WhatsApp. Le paiement n’est pas encaissé sur le site.</p><button class="btn" style="width:100%" onclick="checkoutWhatsApp()" data-i18n="orderWhatsApp">Commander par WhatsApp →</button></div></div>
 <div id="toast" class="toast hidden"></div>
 <script>
-const SUPABASE_URL="YOUR_SUPABASE_URL";
-const SUPABASE_ANON_KEY="YOUR_SUPABASE_ANON_KEY";
+https://olhicufefroptnjagpxo.supabase.co
+const SUPABASE_ANON_KEY="sb_publishable_DTwmNWSfiv8YD0rIAuNMfQ_KQjILvBB";
 const WHATSAPP_NUMBER="212600000000"; // Remplace par ton numéro, sans + ni espaces.
 const hasSupabase=SUPABASE_URL.startsWith("https://")&&!SUPABASE_URL.includes("YOUR_")&&!SUPABASE_ANON_KEY.includes("YOUR_");
 const db=hasSupabase?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
