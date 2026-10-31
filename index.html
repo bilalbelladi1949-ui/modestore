@@ -348,3 +348,278 @@
     }
   </style>
 </head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">MODE<span>STORE</span></a>
+
+      <nav class="main-nav">
+        <a href="#home" data-fr="Accueil" data-ar="الرئيسية">Accueil</a>
+        <a href="#shop" data-fr="Boutique" data-ar="المتجر">Boutique</a>
+        <a href="#categories" data-fr="Catégories" data-ar="الأصناف">Catégories</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="languageBtn" class="icon-btn" type="button">FR / AR</button>
+        <button id="cartBtn" class="cart-btn" type="button">
+          Panier <span id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-content">
+        <p class="eyebrow">MODESTORE — SECOND HAND</p>
+        <h1 data-fr="Le style mérite une deuxième vie."
+            data-ar="الأناقة تستاهل فرصة ثانية.">
+          Le style mérite une deuxième vie.
+        </h1>
+        <p data-fr="Découvrez des vêtements soigneusement sélectionnés à prix accessibles."
+           data-ar="اكتشف ملابس مختارة بعناية وبأثمنة مناسبة.">
+          Découvrez des vêtements soigneusement sélectionnés à prix accessibles.
+        </p>
+        <a href="#shop" class="primary-btn"
+           data-fr="Découvrir la collection"
+           data-ar="اكتشف المجموعة">Découvrir la collection</a>
+      </div>
+    </section>
+
+    <section class="categories-section container" id="categories">
+      <div class="section-heading">
+        <p class="eyebrow">MODESTORE</p>
+        <h2 data-fr="Nos catégories" data-ar="الأصناف ديالنا">Nos catégories</h2>
+      </div>
+
+      <div class="category-grid">
+        <button class="category-card" data-category="all" type="button">
+          <span>01</span>
+          <strong data-fr="Tout voir" data-ar="جميع المنتجات">Tout voir</strong>
+        </button>
+
+        <button class="category-card" data-category="jaket" type="button">
+          <span>02</span>
+          <strong data-fr="Vestes" data-ar="جاكيطات">Vestes</strong>
+        </button>
+
+        <button class="category-card" data-category="tshirt" type="button">
+          <span>03</span>
+          <strong>T-shirts</strong>
+        </button>
+
+        <button class="category-card" data-category="pantalon" type="button">
+          <span>04</span>
+          <strong data-fr="Pantalons" data-ar="سراول">Pantalons</strong>
+        </button>
+
+        <button class="category-card" data-category="hoodie" type="button">
+          <span>05</span>
+          <strong data-fr="Hoodies" data-ar="قوبيات">Hoodies</strong>
+        </button>
+
+        <button class="category-card" data-category="autre" type="button">
+          <span>06</span>
+          <strong data-fr="Autres" data-ar="منتجات أخرى">Autres</strong>
+        </button>
+      </div>
+    </section>
+
+    <section class="shop-section container" id="shop">
+      <div class="section-heading">
+        <p class="eyebrow">THE COLLECTION</p>
+        <h2 data-fr="Nos articles" data-ar="المنتجات ديالنا">Nos articles</h2>
+        <p data-fr="Trouvez votre prochain article préféré."
+           data-ar="قلب على القطعة اللي غتعجبك.">
+          Trouvez votre prochain article préféré.
+        </p>
+      </div>
+
+      <div class="shop-tools">
+        <input id="searchInput" type="search"
+               placeholder="Rechercher un article..." />
+
+        <select id="qualityFilter">
+          <option value="all">Toutes les qualités</option>
+          <option value="original">Original</option>
+          <option value="1er">1er choix</option>
+          <option value="2eme">2ème choix</option>
+          <option value="3eme">3ème choix</option>
+        </select>
+
+        <select id="sortFilter">
+          <option value="newest">Plus récents</option>
+          <option value="price-asc">Prix : croissant</option>
+          <option value="price-desc">Prix : décroissant</option>
+        </select>
+      </div>
+
+      <div id="activeCategory" class="active-category"></div>
+
+      <div id="productsGrid" class="products-grid">
+        <p class="loading-message">Chargement des produits...</p>
+      </div>
+
+      <p id="emptyProducts" class="empty-message" hidden>
+        Aucun produit trouvé.
+      </p>
+    </section>
+
+    <section class="promo-section">
+      <div class="container promo-content">
+        <p class="eyebrow">GIVE CLOTHES A NEW LIFE</p>
+        <h2 data-fr="Un bon style. Un meilleur prix."
+            data-ar="ستايل زوين وثمن مناسب.">
+          Un bon style. Un meilleur prix.
+        </h2>
+      </div>
+    </section>
+
+    <section class="benefits-section container">
+      <div class="benefit">
+        <strong>01</strong>
+        <h3 data-fr="Articles sélectionnés" data-ar="منتجات مختارة">
+          Articles sélectionnés
+        </h3>
+      </div>
+      <div class="benefit">
+        <strong>02</strong>
+        <h3 data-fr="Prix accessibles" data-ar="أثمنة مناسبة">
+          Prix accessibles
+        </h3>
+      </div>
+      <div class="benefit">
+        <strong>03</strong>
+        <h3 data-fr="Commande WhatsApp" data-ar="الطلب عبر واتساب">
+          Commande WhatsApp
+        </h3>
+      </div>
+    </section>
+
+    <section class="admin-section container" id="admin">
+      <div class="admin-login" id="adminLogin">
+        <p class="eyebrow">ADMINISTRATION</p>
+        <h2>Admin ModeStore</h2>
+        <p>Connectez-vous pour gérer vos articles.</p>
+
+        <form id="loginForm">
+          <input id="adminEmail" type="email"
+                 placeholder="Email" required />
+          <input id="adminPassword" type="password"
+                 placeholder="Mot de passe" required />
+          <button class="primary-btn" type="submit">
+            Se connecter
+          </button>
+        </form>
+        <p id="loginMessage" class="form-message"></p>
+      </div>
+
+      <div class="admin-dashboard" id="adminDashboard" hidden>
+        <div class="admin-heading">
+          <div>
+            <p class="eyebrow">MODESTORE</p>
+            <h2>Gestion des produits</h2>
+          </div>
+          <button id="logoutBtn" class="secondary-btn" type="button">
+            Déconnexion
+          </button>
+        </div>
+
+        <form id="productForm" class="product-form">
+          <input id="productName" type="text"
+                 placeholder="Nom du produit" required />
+
+          <textarea id="productDescription"
+                    placeholder="Description du produit"></textarea>
+
+          <input id="productPrice" type="number"
+                 min="0" step="0.01"
+                 placeholder="Prix en DH" required />
+
+          <select id="productCategory" required>
+            <option value="">Choisir une catégorie</option>
+            <option value="jaket">Jaket</option>
+            <option value="tshirt">T-shirt</option>
+            <option value="pantalon">Srawel</option>
+            <option value="hoodie">Qobiya</option>
+            <option value="autre">Autre</option>
+          </select>
+
+          <select id="productQuality" required>
+            <option value="">Choisir la qualité</option>
+            <option value="original">Original</option>
+            <option value="1er">1er choix</option>
+            <option value="2eme">2ème choix</option>
+            <option value="3eme">3ème choix</option>
+          </select>
+
+          <input id="productSize" type="text"
+                 placeholder="Taille (S, M, L, XL...)" />
+
+          <input id="productPhotos" type="file"
+                 accept="image/*" multiple />
+
+          <p class="form-help">
+            Vous pouvez sélectionner plusieurs photos du même produit.
+          </p>
+
+          <button id="saveProductBtn" class="primary-btn" type="submit">
+            Ajouter le produit
+          </button>
+
+          <button id="cancelEditBtn" class="secondary-btn"
+                  type="button" hidden>
+            Annuler la modification
+          </button>
+        </form>
+
+        <div id="adminProductsList" class="admin-products-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="#" class="logo">MODE<span>STORE</span></a>
+      <p>© 2026 ModeStore — Casablanca, Morocco</p>
+      <a href="#home">Retour en haut ↑</a>
+    </div>
+  </footer>
+
+  <!-- Panier -->
+  <div class="overlay" id="cartOverlay" hidden>
+    <aside class="cart-drawer">
+      <div class="drawer-heading">
+        <h2>Mon panier</h2>
+        <button id="closeCartBtn" type="button"
+                class="icon-btn">✕</button>
+      </div>
+
+      <div id="cartItems"></div>
+
+      <div class="cart-footer">
+        <p>Total : <strong id="cartTotal">0 DH</strong></p>
+        <button id="whatsappOrderBtn" class="primary-btn" type="button">
+          Commander sur WhatsApp
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Galerie photos -->
+  <div class="overlay" id="galleryOverlay" hidden>
+    <div class="gallery-modal">
+      <button id="closeGalleryBtn" type="button"
+              class="icon-btn">✕</button>
+      <button id="galleryPrevBtn" type="button">‹</button>
+      <img id="galleryImage" src="" alt="Photo du produit" />
+      <button id="galleryNextBtn" type="button">›</button>
+      <p id="galleryCounter"></p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+</body>
+</html>
