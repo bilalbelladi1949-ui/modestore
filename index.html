@@ -1,361 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="ModeStore - Boutique de vêtements seconde main au Maroc">
-  <title>ModeStore | Seconde Main</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-    :root {
-      --bg: #f7f7f7;
-      --white: #ffffff;
-      --black: #111111;
-      --grey: #777777;
-      --line: #e8e8e8;
-      --radius: 14px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--black);
-    }
-
-    button, input, select, textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .wrap {
-      width: min(1180px, 92%);
-      margin: auto;
-    }
-
-    .top {
-      background: white;
-      border-bottom: 1px solid var(--line);
-      position: sticky;
-      top: 0;
-      z-index: 20;
-    }
-
-    .nav {
-      min-height: 75px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .logo {
-      font-size: 29px;
-      font-weight: 900;
-      letter-spacing: 3px;
-    }
-
-    .navlinks {
-      display: flex;
-      gap: 25px;
-      font-size: 14px;
-    }
-
-    .navbtn, .btn {
-      border: 1px solid var(--black);
-      background: var(--black);
-      color: white;
-      padding: 12px 18px;
-      border-radius: 7px;
-    }
-
-    .navbtn {
-      background: white;
-      color: black;
-    }
-
-    .hero {
-      margin: 35px 0;
-      padding: 65px 7%;
-      background: white;
-      border-radius: var(--radius);
-      display: grid;
-      grid-template-columns: 1.2fr .8fr;
-      align-items: center;
-      gap: 30px;
-    }
-
-    .hero h1 {
-      font-size: clamp(35px, 5vw, 60px);
-      line-height: 1.08;
-      margin: 15px 0;
-    }
-
-    .hero p {
-      color: var(--grey);
-      line-height: 1.8;
-      margin-bottom: 25px;
-      max-width: 520px;
-    }
-
-    .hero-art {
-      min-height: 270px;
-      background: #eeeeee;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      font-size: 35px;
-      font-weight: 900;
-      letter-spacing: 4px;
-    }
-
-    .categories {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
-      margin: 35px 0;
-    }
-
-    .cat {
-      background: white;
-      border: 1px solid var(--line);
-      padding: 22px 12px;
-      border-radius: 10px;
-      text-align: left;
-    }
-
-    .cat b, .cat small {
-      display: block;
-    }
-
-    .cat small {
-      color: var(--grey);
-      margin-top: 7px;
-    }
-
-    .cat.active {
-      border-color: black;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 45px 0 20px;
-    }
-
-    .section-head h2 {
-      font-size: 30px;
-      margin: 8px 0;
-    }
-
-    .eyebrow {
-      color: var(--grey);
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    .tools {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 22px;
-    }
-
-    .tools input, .tools select,
-    .field input, .field select, .field textarea {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid var(--line);
-      border-radius: 7px;
-      background: white;
-      color: black;
-    }
-
-    .products {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-    }
-
-    .product {
-      background: white;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .photo {
-      height: 260px;
-      background: #eeeeee;
-      position: relative;
-    }
-
-    .photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .tag {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: white;
-      padding: 7px 10px;
-      border-radius: 5px;
-      font-size: 11px;
-    }
-
-    .product-body {
-      padding: 15px;
-    }
-
-    .product-body h3 {
-      margin-bottom: 10px;
-    }
-
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin: 10px 0;
-    }
-
-    .pill {
-      background: #f1f1f1;
-      padding: 5px 8px;
-      border-radius: 5px;
-      font-size: 11px;
-    }
-
-    .price-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 15px;
-    }
-
-    .price {
-      font-weight: 900;
-      font-size: 18px;
-    }
-
-    .buy {
-      border: 0;
-      background: black;
-      color: white;
-      padding: 10px 12px;
-      border-radius: 6px;
-    }
-
-    .empty {
-      background: white;
-      padding: 35px;
-      text-align: center;
-      border-radius: 10px;
-      grid-column: 1 / -1;
-    }
-
-    .admin, .banner {
-      background: white;
-      padding: 30px;
-      border-radius: var(--radius);
-      margin: 45px 0;
-    }
-
-    .field {
-      margin: 12px 0;
-    }
-
-    .field label {
-      display: block;
-      margin-bottom: 7px;
-      font-weight: bold;
-    }
-
-    .field textarea {
-      min-height: 100px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    footer {
-      background: #111;
-      color: white;
-      padding: 45px 0;
-      margin-top: 50px;
-    }
-
-    .footrow {
-      display: flex;
-      justify-content: space-between;
-      gap: 30px;
-    }
-
-    @media(max-width: 800px) {
-      .navlinks {
-        display: none;
-      }
-
-      .hero {
-        grid-template-columns: 1fr;
-        padding: 35px 22px;
-      }
-
-      .categories {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .products {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
-
-      .photo {
-        height: 210px;
-      }
-
-      .tools {
-        flex-direction: column;
-      }
-
-      .footrow {
-        flex-direction: column;
-      }
-    }
-  </style>
-</head>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#ffffff">
 <meta name="description" content="ModeStore - Seconde main, bon style.">
-<title>ModeStore | Seconde main, bon style</title>
+<title>ModeStore | Seconde main</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -374,24 +24,17 @@
   padding: 0;
 }
 
+html { scroll-behavior: smooth; }
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background: var(--white);
   color: var(--black);
 }
 
-button, input, select, textarea {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
 
 .container {
   width: min(1180px, 92%);
@@ -399,49 +42,48 @@ a {
 }
 
 header {
+  background: white;
   border-bottom: 1px solid var(--border);
-  background: #fff;
   position: sticky;
   top: 0;
   z-index: 20;
 }
 
 .header-inner {
-  min-height: 76px;
+  min-height: 74px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 15px;
 }
 
 .logo {
   font-size: 27px;
   font-weight: 900;
-  letter-spacing: -1.5px;
+  letter-spacing: -1px;
 }
 
-.logo span {
-  color: #999;
-}
+.logo span { color: #999; }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
 }
 
 .small-btn {
   border: 1px solid var(--border);
   background: white;
-  padding: 10px 14px;
+  padding: 10px 13px;
   border-radius: 5px;
-  color: var(--black);
 }
 
 .hero {
   background: var(--grey);
   padding: 75px 20px;
   text-align: center;
+  margin-top: 25px;
+  border-radius: 7px;
 }
 
 .hero h1 {
@@ -457,28 +99,25 @@ header {
   margin: auto;
 }
 
-.section {
-  padding: 55px 0;
-}
+.section { padding: 48px 0; }
 
 .section-title {
   font-size: 25px;
-  margin-bottom: 25px;
+  margin-bottom: 22px;
 }
 
 .categories {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 12px;
 }
 
 .category-btn {
   background: var(--grey);
   border: 1px solid var(--border);
-  padding: 22px 10px;
-  text-align: center;
-  font-weight: bold;
+  padding: 20px 10px;
   border-radius: 5px;
+  font-weight: bold;
 }
 
 .category-btn:hover,
@@ -487,15 +126,33 @@ header {
   color: white;
 }
 
+.tools {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.tools input,
+.tools select,
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: white;
+}
+
 .products-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 22px;
+  gap: 18px;
 }
 
 .product-card {
   border: 1px solid var(--border);
-  border-radius: 5px;
+  border-radius: 6px;
   overflow: hidden;
   background: white;
 }
@@ -503,14 +160,12 @@ header {
 .product-image {
   width: 100%;
   aspect-ratio: 3 / 4;
-  background: var(--grey);
   object-fit: cover;
   display: block;
+  background: var(--grey);
 }
 
-.product-info {
-  padding: 14px;
-}
+.product-info { padding: 14px; }
 
 .product-info h3 {
   font-size: 16px;
@@ -519,7 +174,7 @@ header {
 
 .product-price {
   font-weight: bold;
-  margin: 9px 0;
+  margin: 10px 0;
 }
 
 .product-quality {
@@ -537,17 +192,20 @@ header {
   margin-top: 10px;
 }
 
-.buy-btn:hover {
-  background: #444;
-}
+.buy-btn:hover { background: #444; }
 
-.hidden {
-  display: none !important;
+.empty {
+  grid-column: 1 / -1;
+  padding: 35px;
+  text-align: center;
+  background: var(--grey);
+  border-radius: 5px;
 }
 
 .admin-section {
   background: var(--grey);
   padding: 45px 0;
+  margin-top: 35px;
 }
 
 .admin-panel {
@@ -555,12 +213,6 @@ header {
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 22px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
 }
 
 .field {
@@ -575,19 +227,15 @@ header {
   font-weight: bold;
 }
 
-.field input,
-.field select,
-.field textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background: white;
-}
-
 .field textarea {
   min-height: 90px;
   resize: vertical;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
 }
 
 .admin-item {
@@ -599,45 +247,818 @@ header {
   border-bottom: 1px solid var(--border);
 }
 
+.hidden { display: none !important; }
+
 footer {
   padding: 28px 0;
   text-align: center;
   color: var(--muted);
   border-top: 1px solid var(--border);
+  margin-top: 35px;
   font-size: 13px;
 }
 
 @media (max-width: 800px) {
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-
-  .categories {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+  .categories { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 480px) {
-  .header-inner {
-    min-height: 65px;
-  }
-
-  .logo {
-    font-size: 22px;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero {
-    padding: 55px 15px;
-  }
-
-  .section {
-    padding: 38px 0;
-  }
+  .header-inner { min-height: 65px; }
+  .logo { font-size: 22px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .hero { padding: 50px 15px; }
+  .tools { flex-direction: column; }
 }
 </style>
 </head>
+<body>
+
+<header>
+  <div class="container header-inner">
+    <a href="#" class="logo">MODE<span>STORE</span></a>
+
+    <div class="header-actions">
+      <button class="small-btn" id="langBtn" type="button" onclick="toggleLanguage()">العربية</button>
+      <button class="small-btn" type="button" onclick="openCart()">
+        🛒 <span id="cartCount">0</span>
+      </button>
+      <a href="#admin" class="small-btn" id="adminLink">Admin</a>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <h1 id="heroTitle">Seconde main, bon style.</h1>
+    <p id="heroText">
+      Découvrez des vêtements sélectionnés avec soin à des prix accessibles.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title" id="categoriesTitle">Catégories</h2>
+
+    <div class="categories">
+      <button class="category-btn active" onclick="filterCategory('all',this)">Tout</button>
+      <button class="category-btn" onclick="filterCategory('Jaket',this)">Vestes</button>
+      <button class="category-btn" onclick="filterCategory('T-shirt',this)">T-shirts</button>
+      <button class="category-btn" onclick="filterCategory('Srawel',this)">Pantalons</button>
+      <button class="category-btn" onclick="filterCategory('Qobiyat',this)">Hoodies</button>
+    </div>
+  </section>
+
+  <section class="section" id="shop">
+    <h2 class="section-title" id="productsTitle">Nos articles</h2>
+
+    <div class="tools">
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Rechercher un article..."
+        oninput="renderProducts()"
+      >
+
+      <select id="qualityFilter" onchange="renderProducts()">
+        <option value="">Toutes les qualités</option>
+        <option value="Original">Original</option>
+        <option value="1er choix">1er choix</option>
+        <option value="2ème choix">2ème choix</option>
+        <option value="3ème choix">3ème choix</option>
+      </select>
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+      <div class="empty">Chargement des articles...</div>
+    </div>
+  </section>
+
+</main>
+
+<section class="admin-section" id="admin">
+  <div class="container">
+    <div class="admin-panel">
+
+      <h2 id="adminTitle">Administration</h2>
+      <p style="color:#777;margin:10px 0 20px" id="adminDescription">
+        Connectez-vous pour gérer vos articles.
+      </p>
+
+      <div id="loginBox">
+        <form id="loginForm">
+          <div class="field">
+            <label>Email</label>
+            <input type="email" id="adminEmail" required>
+          </div>
+
+          <div class="field">
+            <label>Password</label>
+            <input type="password" id="adminPassword" required>
+          </div>
+
+          <button class="buy-btn" type="submit" id="loginBtn">
+            Se connecter
+          </button>
+        </form>
+      </div>
+
+      <div id="adminEditor" class="hidden">
+
+        <p id="adminStatus" style="margin:15px 0"></p>
+
+        <button class="small-btn" type="button" onclick="logout()">
+          Déconnexion
+        </button>
+
+        <hr style="border:0;border-top:1px solid #eee;margin:22px 0">
+
+        <h3 id="formTitle">Ajouter un article</h3>
+
+        <form id="productForm">
+
+          <input type="hidden" id="editId">
+
+          <div class="form-grid">
+
+            <div class="field">
+              <label>Nom du produit</label>
+              <input type="text" id="name" required>
+            </div>
+
+            <div class="field">
+              <label>Prix (DH)</label>
+              <input type="number" id="price" min="0" step="0.01" required>
+            </div>
+
+            <div class="field">
+              <label>Catégorie</label>
+              <select id="category" required>
+                <option value="Jaket">Veste</option>
+                <option value="T-shirt">T-shirt</option>
+                <option value="Srawel">Pantalon</option>
+                <option value="Qobiyat">Hoodie</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Qualité</label>
+              <select id="quality" required>
+                <option value="Original">Original</option>
+                <option value="1er choix">1er choix</option>
+                <option value="2ème choix">2ème choix</option>
+                <option value="3ème choix">3ème choix</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Taille</label>
+              <input type="text" id="size" placeholder="S, M, L, XL...">
+            </div>
+
+            <div class="field">
+              <label>État</label>
+              <select id="condition">
+                <option value="Très bon état">Très bon état</option>
+                <option value="Bon état">Bon état</option>
+                <option value="État correct">État correct</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="field">
+            <label>Description</label>
+            <textarea id="description"></textarea>
+          </div>
+
+          <div class="field">
+            <label>Photos du produit (maximum 5)</label>
+            <input
+              type="file"
+              id="photo"
+              accept="image/*"
+              multiple
+            >
+          </div>
+
+          <button class="buy-btn" type="submit" id="saveProductBtn">
+            Enregistrer l'article
+          </button>
+
+          <button
+            class="small-btn hidden"
+            type="button"
+            id="cancelEdit"
+            onclick="resetForm()"
+            style="margin-top:10px"
+          >
+            Annuler la modification
+          </button>
+
+        </form>
+
+        <hr style="border:0;border-top:1px solid #eee;margin:25px 0">
+
+        <h3>Mes articles</h3>
+        <div id="adminList"></div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <h2>MODESTORE</h2>
+    <p style="margin-top:10px">Seconde main, bon style.</p>
+    <p style="margin-top:8px">© <span id="year"></span> ModeStore</p>
+  </div>
+</footer>
+
+<!-- Panier -->
+<div id="cartDrawer" class="hidden"
+style="position:fixed;inset:0;background:#0008;z-index:50;padding:20px;">
+
+  <div style="background:white;max-width:500px;margin:30px auto;padding:22px;border-radius:8px;max-height:85vh;overflow:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h2>Mon panier</h2>
+      <button class="small-btn" onclick="closeCart()">✕</button>
+    </div>
+
+    <div id="cartItems" style="margin-top:20px"></div>
+
+    <h3 id="cartTotal" style="margin-top:20px">Total : 0 DH</h3>
+
+    <button class="buy-btn" onclick="checkoutWhatsApp()">
+      Commander sur WhatsApp
+    </button>
+  </div>
+</div>
+
+<!-- Galerie photos -->
+<div id="galleryModal" class="hidden"
+style="position:fixed;inset:0;background:#000d;z-index:60;padding:20px;">
+
+  <div style="max-width:700px;margin:20px auto;text-align:center">
+    <button class="small-btn" onclick="closeGallery()" style="margin-bottom:15px">
+      Fermer ✕
+    </button>
+
+    <img id="galleryMainImage"
+    src=""
+    alt="Photo du produit"
+    style="width:100%;max-height:65vh;object-fit:contain;background:white;border-radius:6px">
+
+    <div id="galleryThumbs"
+    style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:15px"></div>
+  </div>
+</div>
+
+<div id="toast"
+style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#171717;color:white;padding:12px 20px;border-radius:5px;display:none;z-index:100">
+</div>
+<script>
+/* ===== MODESTORE CONFIGURATION ===== */
+
+const SUPABASE_URL = "https://olhicufefroptnjagpxo.supabase.co";
+
+/* Mets ici la même clé anon/publishable que dans ton ancien fichier */
+const SUPABASE_ANON_KEY = "COLLE_ICI_TA_CLE_ANON_EXISTANTE";
+
+/* Remplace par ton numéro WhatsApp professionnel */
+const WHATSAPP_NUMBER = "212600000000";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+let products = [];
+let user = null;
+let activeCategory = "all";
+let cart = JSON.parse(localStorage.getItem("modestore_cart") || "[]");
+let currentGallery = [];
+
+/* ===== OUTILS ===== */
+
+function money(value) {
+  return Number(value || 0).toLocaleString("fr-FR") + " DH";
+}
+
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function toast(message) {
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.style.display = "block";
+  setTimeout(() => el.style.display = "none", 2600);
+}
+
+function productPhotos(product) {
+  let photos = product.photos || [];
+
+  if (typeof photos === "string") {
+    try { photos = JSON.parse(photos); }
+    catch { photos = []; }
+  }
+
+  if (!Array.isArray(photos)) photos = [];
+  if (product.photo_url && !photos.includes(product.photo_url)) {
+    photos.unshift(product.photo_url);
+  }
+
+  return [...new Set(photos.filter(Boolean))].slice(0, 5);
+}
+
+/* ===== CHARGEMENT DES PRODUITS ===== */
+
+async function loadProducts() {
+  const { data, error } = await db
+    .from("products")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    document.getElementById("productsGrid").innerHTML =
+      '<div class="empty">Impossible de charger les articles. Vérifie Supabase.</div>';
+    return;
+  }
+
+  products = data || [];
+  renderProducts();
+  renderAdminList();
+}
+
+function renderProducts() {
+  const grid = document.getElementById("productsGrid");
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  const quality = document.getElementById("qualityFilter").value;
+
+  const filtered = products.filter(product => {
+    const matchesCategory =
+      activeCategory === "all" || product.category === activeCategory;
+
+    const matchesSearch =
+      String(product.name || "").toLowerCase().includes(search);
+
+    const matchesQuality =
+      !quality || product.quality === quality;
+
+    return matchesCategory &&
+      matchesSearch &&
+      matchesQuality &&
+      product.is_available !== false;
+  });
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty">Aucun article disponible pour le moment.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(product => {
+    const photos = productPhotos(product);
+    const image = photos[0] || "";
+
+    return `
+      <article class="product-card">
+        <img
+          class="product-image"
+          src="${esc(image)}"
+          alt="${esc(product.name)}"
+          onclick="openGallery('${esc(product.id)}')"
+          style="cursor:pointer"
+        >
+
+        <div class="product-info">
+          <h3>${esc(product.name)}</h3>
+          <div class="product-quality">${esc(product.quality || "")}</div>
+          <div class="product-quality">
+            ${esc(product.category || "")}
+            ${product.size ? " · Taille " + esc(product.size) : ""}
+          </div>
+          <div class="product-price">${money(product.price)}</div>
+
+          <button class="buy-btn" onclick="addToCart('${esc(product.id)}')">
+            Ajouter au panier
+          </button>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+function filterCategory(category, button) {
+  activeCategory = category;
+
+  document.querySelectorAll(".category-btn").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  button.classList.add("active");
+  renderProducts();
+}
+
+/* ===== GALERIE PHOTOS ===== */
+
+function openGallery(id) {
+  const product = products.find(p => String(p.id) === String(id));
+  if (!product) return;
+
+  currentGallery = productPhotos(product);
+  if (!currentGallery.length) return;
+
+  document.getElementById("galleryMainImage").src = currentGallery[0];
+
+  document.getElementById("galleryThumbs").innerHTML =
+    currentGallery.map((photo, index) => `
+      <img
+        src="${esc(photo)}"
+        alt="Photo ${index + 1}"
+        onclick="changeGalleryPhoto(${index})"
+        style="width:65px;height:65px;object-fit:cover;cursor:pointer;border:2px solid #ddd"
+      >
+    `).join("");
+
+  document.getElementById("galleryModal").classList.remove("hidden");
+}
+
+function changeGalleryPhoto(index) {
+  if (currentGallery[index]) {
+    document.getElementById("galleryMainImage").src = currentGallery[index];
+  }
+}
+
+function closeGallery() {
+  document.getElementById("galleryModal").classList.add("hidden");
+}
+
+/* ===== PANIER ===== */
+
+function saveCart() {
+  localStorage.setItem("modestore_cart", JSON.stringify(cart));
+  document.getElementById("cartCount").textContent =
+    cart.reduce((total, item) => total + item.quantity, 0);
+}
+
+function addToCart(id) {
+  const product = products.find(p => String(p.id) === String(id));
+  if (!product) return;
+
+  const existing = cart.find(item => String(item.id) === String(id));
+
+  if (existing) {
+    existing.quantity++;
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      price: Number(product.price),
+      quantity: 1
+    });
+  }
+
+  saveCart();
+  toast("Article ajouté au panier.");
+}
+
+function openCart() {
+  renderCart();
+  document.getElementById("cartDrawer").classList.remove("hidden");
+}
+
+function closeCart() {
+  document.getElementById("cartDrawer").classList.add("hidden");
+}
+
+function renderCart() {
+  const box = document.getElementById("cartItems");
+
+  if (!cart.length) {
+    box.innerHTML = "<p>Votre panier est vide.</p>";
+    document.getElementById("cartTotal").textContent = "Total : 0 DH";
+    return;
+  }
+
+  box.innerHTML = cart.map(item => `
+    <div style="padding:12px 0;border-bottom:1px solid #eee">
+      <b>${esc(item.name)}</b>
+      <p>${money(item.price)} × ${item.quantity}</p>
+      <button class="small-btn" onclick="changeQuantity('${esc(item.id)}',-1)">−</button>
+      <button class="small-btn" onclick="changeQuantity('${esc(item.id)}',1)">+</button>
+      <button class="small-btn" onclick="removeFromCart('${esc(item.id)}')">Supprimer</button>
+    </div>
+  `).join("");
+
+  const total = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity, 0
+  );
+
+  document.getElementById("cartTotal").textContent =
+    "Total : " + money(total);
+}
+
+function changeQuantity(id, amount) {
+  const item = cart.find(p => String(p.id) === String(id));
+  if (!item) return;
+
+  item.quantity += amount;
+
+  if (item.quantity <= 0) {
+    cart = cart.filter(p => String(p.id) !== String(id));
+  }
+
+  saveCart();
+  renderCart();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(p => String(p.id) !== String(id));
+  saveCart();
+  renderCart();
+}
+
+function checkoutWhatsApp() {
+  if (!cart.length) {
+    toast("Votre panier est vide.");
+    return;
+  }
+
+  const total = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity, 0
+  );
+
+  let message = "Bonjour ModeStore, je souhaite commander :\n\n";
+
+  cart.forEach(item => {
+    message += `${item.name} - ${item.quantity} x ${item.price} DH\n`;
+  });
+
+  message += `\nTotal : ${total} DH\n`;
+  message += "Merci de me contacter pour confirmer la commande.";
+
+  const url =
+    "https://wa.me/" + WHATSAPP_NUMBER +
+    "?text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank");
+}
+
+/* ===== CONNEXION ADMIN ===== */
+
+document.getElementById("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const email = document.getElementById("adminEmail").value.trim();
+  const password = document.getElementById("adminPassword").value;
+
+  const { data, error } = await db.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    toast("Connexion impossible. Vérifie email et mot de passe.");
+    console.error(error);
+    return;
+  }
+
+  user = data.user;
+  setAdminUI();
+  await loadAdminProducts();
+  toast("Connexion réussie.");
+});
+
+function setAdminUI() {
+  document.getElementById("loginBox").classList.toggle("hidden", !!user);
+  document.getElementById("adminEditor").classList.toggle("hidden", !user);
+  document.getElementById("adminStatus").textContent =
+    user ? user.email : "Déconnecté";
+}
+
+async function logout() {
+  await db.auth.signOut();
+  user = null;
+  setAdminUI();
+  toast("Déconnexion réussie.");
+}
+
+async function initAuth() {
+  const { data } = await db.auth.getSession();
+  user = data.session?.user || null;
+  setAdminUI();
+
+  db.auth.onAuthStateChange((_event, session) => {
+    user = session?.user || null;
+    setAdminUI();
+    if (user) loadAdminProducts();
+  });
+}
+
+async function loadAdminProducts() {
+  if (!user) return;
+  await loadProducts();
+}
+
+/* ===== ADMIN : LISTE ET MODIFICATION ===== */
+
+function renderAdminList() {
+  const el = document.getElementById("adminList");
+  if (!el || !user) return;
+
+  el.innerHTML = products.length
+    ? products.map(p => `
+      <div class="admin-item">
+        <span>
+          <b>${esc(p.name)}</b> · ${money(p.price)}
+          · ${esc(p.quality || "")}
+        </span>
+        <div style="display:flex;gap:6px">
+          <button class="small-btn" onclick="editProduct('${esc(p.id)}')">Modifier</button>
+          <button class="small-btn" onclick="deleteProduct('${esc(p.id)}')">Supprimer</button>
+        </div>
+      </div>
+    `).join("")
+    : "<p>Aucun article pour le moment.</p>";
+}
+
+function editProduct(id) {
+  const p = products.find(item => String(item.id) === String(id));
+  if (!p) return;
+
+  ["name", "price", "category", "quality", "size", "condition", "description"]
+    .forEach(key => {
+      document.getElementById(key).value = p[key] || "";
+    });
+
+  document.getElementById("editId").value = p.id;
+  document.getElementById("cancelEdit").classList.remove("hidden");
+  document.getElementById("formTitle").textContent = "Modifier l'article";
+
+  document.getElementById("admin").scrollIntoView({ behavior: "smooth" });
+}
+
+function resetForm() {
+  document.getElementById("productForm").reset();
+  document.getElementById("editId").value = "";
+  document.getElementById("cancelEdit").classList.add("hidden");
+  document.getElementById("formTitle").textContent = "Ajouter un article";
+}
+
+/* ===== UPLOAD DES PHOTOS ===== */
+
+async function uploadPhoto(file) {
+  const extension = (file.name.split(".").pop() || "jpg")
+    .toLowerCase().replace(/[^a-z0-9]/g, "");
+
+  const path =
+    Date.now() + "-" + Math.random().toString(36).slice(2) + "." + extension;
+
+  const { error } = await db.storage
+    .from("product-photos")
+    .upload(path, file, {
+      upsert: false,
+      contentType: file.type
+    });
+
+  if (error) throw error;
+
+  const { data } = db.storage
+    .from("product-photos")
+    .getPublicUrl(path);
+
+  return data.publicUrl;
+}
+
+/* ===== AJOUT ET ENREGISTREMENT ===== */
+
+document.getElementById("productForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  if (!user) {
+    toast("Connecte-toi pour ajouter un article.");
+    return;
+  }
+
+  const id = document.getElementById("editId").value;
+  const old = products.find(p => String(p.id) === String(id));
+
+  let photos = productPhotos(old || {});
+  const files = [...document.getElementById("photo").files].slice(0, 5);
+
+  try {
+    for (const file of files) {
+      const url = await uploadPhoto(file);
+      if (url) photos.push(url);
+    }
+  } catch (error) {
+    console.error(error);
+    toast("Erreur d'upload. Vérifie le bucket product-photos.");
+    return;
+  }
+
+  photos = [...new Set(photos)].slice(0, 5);
+
+  const row = {
+    name: document.getElementById("name").value.trim(),
+    price: Number(document.getElementById("price").value),
+    category: document.getElementById("category").value,
+    quality: document.getElementById("quality").value,
+    size: document.getElementById("size").value.trim(),
+    condition: document.getElementById("condition").value,
+    description: document.getElementById("description").value.trim(),
+    photo_url: photos[0] || "",
+    photos,
+    is_available: true
+  };
+
+  let result;
+
+  if (id) {
+    result = await db.from("products")
+      .update(row).eq("id", id).select().single();
+  } else {
+    result = await db.from("products")
+      .insert(row).select().single();
+  }
+
+  if (result.error) {
+    console.error(result.error);
+    toast("Erreur de sauvegarde. Vérifie la colonne photos dans products.");
+    return;
+  }
+
+  await loadAdminProducts();
+  resetForm();
+  document.getElementById("photo").value = "";
+  toast("Article enregistré.");
+});
+
+/* ===== SUPPRESSION ===== */
+
+async function deleteProduct(id) {
+  if (!user) return;
+
+  const p = products.find(item => String(item.id) === String(id));
+  if (!p) return;
+
+  if (!confirm("Supprimer cet article : " + p.name + " ?")) return;
+
+  const { error } = await db.from("products").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    toast("Suppression impossible.");
+    return;
+  }
+
+  await loadAdminProducts();
+  toast("Article supprimé.");
+}
+
+/* ===== LANGUE ===== */
+
+let lang = "fr";
+
+function toggleLanguage() {
+  lang = lang === "fr" ? "dar" : "fr";
+
+  document.getElementById("langBtn").textContent =
+    lang === "fr" ? "العربية" : "Français";
+
+  document.getElementById("heroTitle").textContent =
+    lang === "fr" ? "Seconde main, bon style." : "لبسة مستعملة، ستيل زوين.";
+
+  document.getElementById("heroText").textContent =
+    lang === "fr"
+      ? "Découvrez des vêtements sélectionnés avec soin à des prix accessibles."
+      : "اكتشف ملابس مختارة بعناية وبأثمنة مناسبة.";
+
+  document.getElementById("categoriesTitle").textContent =
+    lang === "fr" ? "Catégories" : "الأصناف";
+
+  document.getElementById("productsTitle").textContent =
+    lang === "fr" ? "Nos articles" : "المنتجات ديالنا";
+}
+
+/* ===== INITIALISATION ===== */
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+saveCart();
+loadProducts();
+initAuth();
+
+</script>
+</body>
+</html>
